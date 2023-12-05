@@ -22354,9 +22354,9 @@ fabric.Image.filters.BaseFilter.fromObject = function(object, callback) {
           data = imageData.data, i, len = data.length,
           brightness = Math.round(this.brightness * 255);
       for (i = 0; i < len; i += 4) {
-        data[i] = data[i] + brightness;
-        data[i + 1] = data[i + 1] + brightness;
-        data[i + 2] = data[i + 2] + brightness;
+        data[i] = data[i] * (1+brightness);
+        data[i + 1] = data[i + 1] * (1+brightness);
+        data[i + 2] = data[i + 2] * (1+brightness);
       }
     },
 
