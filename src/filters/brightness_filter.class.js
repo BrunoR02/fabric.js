@@ -70,7 +70,7 @@
       }
       var imageData = options.imageData,
           data = imageData.data, i, len = data.length,
-          brightness = Math.round(this.brightness * 255);
+          brightness = this.brightness;
       for (i = 0; i < len; i += 4) {
         data[i] = data[i] * (1+brightness);
         data[i + 1] = data[i + 1] * (1+brightness);
