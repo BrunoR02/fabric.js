@@ -21730,7 +21730,7 @@ function copyGLTo2DPutImageData(gl, pipelineState) {
      * @param {HTMLCanvasElement} targetCanvas The destination for filtered output to be drawn.
      */
     applyFilters: function(filters, sourceElement, sourceWidth, sourceHeight, targetCanvas) {
-      var ctx = targetCanvas.getContext('2d');
+      var ctx = targetCanvas.getContext('2d',{willReadFrequently:true});
       ctx.drawImage(sourceElement, 0, 0, sourceWidth, sourceHeight);
       var imageData = ctx.getImageData(0, 0, sourceWidth, sourceHeight);
       var originalImageData = ctx.getImageData(0, 0, sourceWidth, sourceHeight);
@@ -22353,6 +22353,7 @@ fabric.Image.filters.BaseFilter.fromObject = function(object, callback) {
       var imageData = options.imageData,
           data = imageData.data, i, len = data.length,
           brightness = this.brightness;
+      console.log("brightness",this.brightness);
       for (i = 0; i < len; i += 4) {
         data[i] = data[i] * (1+brightness);
         data[i + 1] = data[i + 1] * (1+brightness);
@@ -24612,13 +24613,13 @@ fabric.Image.filters.BaseFilter.fromObject = function(object, callback) {
       }
       var imageData = options.imageData, i, len,
           data = imageData.data, len = data.length,
-          contrast = Math.floor(this.contrast * 255),
-          contrastF = 259 * (contrast + 255) / (255 * (259 - contrast));
+          contrast = this.contrast
+          // contrastF = 259 * (contrast + 255) / (255 * (259 - contrast));
 
       for (i = 0; i < len; i += 4) {
-        data[i] = contrastF * (data[i] - 128) + 128;
-        data[i + 1] = contrastF * (data[i + 1] - 128) + 128;
-        data[i + 2] = contrastF * (data[i + 2] - 128) + 128;
+        data[i] = (data[i] - 128) * (1+contrast) + 128;
+        data[i + 1] = (data[i + 1] - 128) * (1+contrast) + 128;
+        data[i + 2] = (data[i + 2] - 128) * (1+contrast) + 128;
       }
     },
 

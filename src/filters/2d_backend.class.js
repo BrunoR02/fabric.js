@@ -38,7 +38,7 @@
      * @param {HTMLCanvasElement} targetCanvas The destination for filtered output to be drawn.
      */
     applyFilters: function(filters, sourceElement, sourceWidth, sourceHeight, targetCanvas) {
-      var ctx = targetCanvas.getContext('2d');
+      var ctx = targetCanvas.getContext('2d',{willReadFrequently:true});
       ctx.drawImage(sourceElement, 0, 0, sourceWidth, sourceHeight);
       var imageData = ctx.getImageData(0, 0, sourceWidth, sourceHeight);
       var originalImageData = ctx.getImageData(0, 0, sourceWidth, sourceHeight);
